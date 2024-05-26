@@ -1,0 +1,16 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t elzette/complex-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true elzette/complex-test npm test -- --coverage
+
+after_success:
+  - docker build -t elzette/multi-client ./client
+  - docker build -t elzette/multi-nginx ./nginx
+  - docker build -t elzette/multi-server ./server
+  - docker build -t elzette/multi-worker ./worker
+  
