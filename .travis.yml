@@ -13,4 +13,9 @@ after_success:
   - docker build -t elzette/multi-nginx ./nginx
   - docker build -t elzette/multi-server ./server
   - docker build -t elzette/multi-worker ./worker
-  
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push elzette/multi-client
+  - docker push elzette/multi-nginx
+  - docker push elzette/multi-server
+  - docker push elzette/multi-worker
+  - 
